@@ -1213,7 +1213,7 @@ footer {
 // ===========================================
 const EMAILJS_PUBLIC_KEY  = 'h2p6szLOTqQtHRxUM';   // From EmailJS > Account > General
 const EMAILJS_SERVICE_ID  = 'service_9h5v6dj';   // From EmailJS > Email Services
-const EMAILJS_TEMPLATE_ID = 'template_cl3os45';  // From EmailJS > Email Templates
+const EMAILJS_TEMPLATE_ID = 'template_0b6p37r';  // From EmailJS > Email Templates
 // ===========================================
 
 const SYSTEM_PROMPT = `You are an STR investor profile advisor for BNB Breeze, created by AJ Raber. Your job is to help investors identify which of four investor profiles they are, then give them useful, honest guidance based on that profile.
@@ -1432,8 +1432,8 @@ function addProfileCard(data, followUp) {
     </div>`;
   getMessages().appendChild(el);
   profileResult = data;
+  sendLeadEmail('profile delivered');
   if (followUp) setTimeout(() => addBotMsg(followUp), 350);
-  setTimeout(resetInactivityTimer, 2000);
   setTimeout(() => addEndConvoButton(), followUp ? 1800 : 800);
   scroll();
 }
@@ -1500,7 +1500,7 @@ async function sendMessage() {
   addUserMsg(text);
   messages.push({ role: 'user', content: text });
   conversationLog.push({ role: 'user', content: text });
-  if (profileResult && !emailSent) resetInactivityTimer();
+
   addTyping();
 
   try {
