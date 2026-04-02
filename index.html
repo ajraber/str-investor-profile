@@ -1276,7 +1276,6 @@ let isLoading = false;
 let leadInfo = { name: '', email: '', company: '' };
 let profileResult = null;
 let conversationLog = [];
-let emailSent = false;
 
 const profileMeta = {
   wealth_builder: { cls: 'wb', chipCls: 'chip-blue' },
@@ -1317,10 +1316,14 @@ function sendLeadEmail(trigger) {
   emailSent = true;
   clearInactivityTimer();
 
-  const userMessages = conversationLog
-    .filter(m => m.role === 'user')
-    .map(m => m.content)
-    .join(' | ');
+  const fullConversation = conversationLog
+    .map(m => {
+      const role = m.role === 'user' ? leadInfo.name || 'User' : 'Advisor';
+      const content = m.content.replace(/PROFILE_RESULT:\{[\s\S]*?\}/g, '[Profile card delivered]');
+      return role + ': ' + content;
+    })
+    .join('\n\n');
+  const userMessages = fullConversation;
 
   const source = trigger || 'unknown';
 
@@ -1433,6 +1436,7 @@ function addProfileCard(data, followUp) {
   getMessages().appendChild(el);
   profileResult = data;
   sendLeadEmail('profile delivered');
+  initialEmailSent = true;
   if (followUp) setTimeout(() => addBotMsg(followUp), 350);
   setTimeout(() => addEndConvoButton(), followUp ? 1800 : 800);
   scroll();
@@ -1479,9 +1483,32 @@ function addEndConvoButton() {
   scroll();
 }
 
+function buildConversationSummary() {
+  return conversationLog
+    .map(m => {
+      const role = m.role === 'user' ? leadInfo.name || 'User' : 'Advisor';
+      const content = m.content.replace(/PROFILE_RESULT:[\s\S]*?\}/g, '[Profile card delivered]');
+      return role + ': ' + content;
+    })
+    .join('\n\n');
+}
+
+let updateTimer = null;
+let initialEmailSent = false;
+
+function scheduleUpdateEmail() {
+  if (!profileResult) return;
+  if (updateTimer) clearTimeout(updateTimer);
+  updateTimer = setTimeout(() => {
+    sendLeadEmail('conversation update - 2min after last message');
+    updateTimer = null;
+  }, 2 * 60 * 1000);
+}
+
 function endConversation() {
   const btn = document.getElementById('endConvoBtn');
   if (btn) btn.remove();
+  if (updateTimer) { clearTimeout(updateTimer); updateTimer = null; }
   sendLeadEmail('done button');
   addBotMsg('Thanks for chatting. If you ever want to think through a specific decision, evaluate a potential buy, or talk through how your current operations fit your investor profile, come back anytime. You can also learn more about how BNB Breeze works with investors at bnbbreeze.co.');
 }
@@ -1500,6 +1527,7 @@ async function sendMessage() {
   addUserMsg(text);
   messages.push({ role: 'user', content: text });
   conversationLog.push({ role: 'user', content: text });
+  if (profileResult && initialEmailSent) scheduleUpdateEmail();
 
   addTyping();
 
