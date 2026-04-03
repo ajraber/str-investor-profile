@@ -213,6 +213,56 @@ body {
 }
 
 
+
+/* NUDGE POPUP */
+.nudge-popup {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 150;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 14px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  max-width: 340px;
+  width: calc(100% - 32px);
+  animation: slideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  cursor: pointer;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.nudge-popup.hiding {
+  animation: slideDown 0.25s ease forwards;
+}
+
+@keyframes slideDown {
+  from { opacity: 1; transform: translateX(-50%) translateY(0); }
+  to { opacity: 0; transform: translateX(-50%) translateY(20px); }
+}
+
+.nudge-icon { font-size: 22px; flex-shrink: 0; }
+
+.nudge-text { font-size: 13px; font-weight: 400; line-height: 1.4; flex: 1; }
+
+.nudge-text strong { font-weight: 600; display: block; margin-bottom: 2px; }
+
+.nudge-close {
+  font-size: 18px;
+  opacity: 0.5;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+
 /* NAV */
 nav {
   position: sticky;
@@ -936,9 +986,12 @@ nav {
 
 .profiles-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 20px;
   margin-top: 32px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .profile-card {
@@ -1307,6 +1360,56 @@ footer {
 }
 
 
+
+/* NUDGE POPUP */
+.nudge-popup {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 150;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 14px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  max-width: 340px;
+  width: calc(100% - 32px);
+  animation: slideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  cursor: pointer;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.nudge-popup.hiding {
+  animation: slideDown 0.25s ease forwards;
+}
+
+@keyframes slideDown {
+  from { opacity: 1; transform: translateX(-50%) translateY(0); }
+  to { opacity: 0; transform: translateX(-50%) translateY(20px); }
+}
+
+.nudge-icon { font-size: 22px; flex-shrink: 0; }
+
+.nudge-text { font-size: 13px; font-weight: 400; line-height: 1.4; flex: 1; }
+
+.nudge-text strong { font-weight: 600; display: block; margin-bottom: 2px; }
+
+.nudge-close {
+  font-size: 18px;
+  opacity: 0.5;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+
 /* NAV */
   nav { padding: 0 16px; height: 52px; }
   .nav-links { display: none; }
@@ -1520,7 +1623,7 @@ footer {
   .starter-btn { font-size: 11px; padding: 5px 10px; }
 
   /* PROFILES GRID */
-  .profiles-grid { grid-template-columns: 1fr; gap: 14px; }
+  .profiles-grid { grid-template-columns: 1fr; gap: 14px; max-width: 100%; }
 
   .profile-card-header { padding: 16px 18px 12px; }
 
@@ -2235,10 +2338,10 @@ function showProfilePopup(data) {
       <p class="popup-profile-name" style="color:${color};">You're ${data.name}</p>
       <p class="popup-filter">"${data.filter}"</p>
       <button class="popup-btn" style="background:${color};margin-bottom:8px;" onclick="closeProfilePopup()">
-        Keep chatting
+        See my results
       </button>
-      <button class="popup-btn" style="background:transparent;color:${color};border:1.5px solid ${color};margin-top:0;" onclick="goToProfile('${data.profile}')">
-        See my full breakdown
+      <button class="popup-btn" style="background:transparent;color:${color};border:1.5px solid ${color};margin-top:0;" onclick="closeProfilePopup()">
+        Keep chatting
       </button>
     </div>`;
   document.body.appendChild(overlay);
@@ -2253,6 +2356,39 @@ function closeProfilePopup() {
     popup.style.opacity = '0';
     popup.style.transition = 'opacity 0.2s ease';
     setTimeout(() => popup.remove(), 200);
+  }
+}
+
+let nudgeTimer = null;
+
+function showNudgePopup() {
+  if (document.getElementById('nudgePopup')) return;
+  const nudge = document.createElement('div');
+  nudge.className = 'nudge-popup';
+  nudge.id = 'nudgePopup';
+  nudge.innerHTML = `
+    <span class="nudge-icon">💬</span>
+    <div class="nudge-text">
+      <strong>Want deeper insight?</strong>
+      Scroll back up to chat with the AI about your specific situation.
+    </div>
+    <span class="nudge-close">×</span>`;
+  nudge.onclick = function(e) {
+    dismissNudge();
+    window.scrollTo({ top: document.getElementById('bot').offsetTop - 60, behavior: 'smooth' });
+  };
+  nudge.querySelector('.nudge-close').onclick = function(e) {
+    e.stopPropagation();
+    dismissNudge();
+  };
+  document.body.appendChild(nudge);
+}
+
+function dismissNudge() {
+  const nudge = document.getElementById('nudgePopup');
+  if (nudge) {
+    nudge.classList.add('hiding');
+    setTimeout(() => nudge.remove(), 250);
   }
 }
 
@@ -2302,6 +2438,10 @@ function goToProfile(profileKey) {
       }
     }
   }, isMobile ? 400 : 100);
+
+  // Show nudge after 30 seconds to bring them back to chat
+  if (nudgeTimer) clearTimeout(nudgeTimer);
+  nudgeTimer = setTimeout(showNudgePopup, 30000);
 }
 
 function addSuggestedActions(data) {
