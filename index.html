@@ -436,6 +436,23 @@ nav {
 }
 
 .chat-header-text { font-size: 13px; font-weight: 500; color: var(--ink); }
+
+.chat-back-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--ink);
+  border-radius: 6px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-right: 4px;
+  transition: background 0.15s;
+}
+
+.chat-back-btn:hover { background: var(--bg); }
 .chat-header-name { font-size: 12px; color: var(--brand); font-weight: 500; margin-left: 4px; }
 .chat-header-sub { font-size: 12px; color: var(--muted); margin-left: auto; }
 
@@ -1098,6 +1115,10 @@ footer {
     flex-shrink: 0;
   }
 
+  .chat-back-btn {
+    display: flex;
+  }
+
   .chat-starters {
     flex-shrink: 0;
   }
@@ -1249,6 +1270,9 @@ footer {
     <!-- CHAT -->
     <div class="chat-container" id="chatContainer">
       <div class="chat-header">
+        <button class="chat-back-btn" id="chatBackBtn" onclick="closeChat()" aria-label="Back to site">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 4L6 9L11 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
         <div class="chat-status-dot"></div>
         <span class="chat-header-text">Profile Advisor</span>
         <span class="chat-header-name" id="chatHeaderName"></span>
@@ -1753,6 +1777,13 @@ function scheduleUpdateEmail() {
     sendLeadEmail('conversation update - 2min after last message');
     updateTimer = null;
   }, 2 * 60 * 1000);
+}
+
+function closeChat() {
+  const chat = document.getElementById('chatContainer');
+  chat.classList.remove('visible');
+  document.getElementById('leadGate').style.display = 'block';
+  window.scrollTo({ top: document.getElementById('bot').offsetTop - 60, behavior: 'smooth' });
 }
 
 function endConversation() {
