@@ -1069,8 +1069,56 @@ footer {
     border-radius: 10px;
   }
 
-  /* CHAT */
-  .chat-container { height: 480px; border-radius: 14px; }
+  /* CHAT — fixed full screen like a native app */
+  .chat-container {
+    position: fixed;
+    top: 52px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: auto;
+    border-radius: 0;
+    border: none;
+    z-index: 50;
+    display: none;
+  }
+
+  .chat-container.visible {
+    display: flex !important;
+  }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  .chat-header {
+    flex-shrink: 0;
+  }
+
+  .chat-starters {
+    flex-shrink: 0;
+  }
+
+  .chat-input-area {
+    flex-shrink: 0;
+    padding: 10px 12px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+  }
+
+  .chat-input {
+    font-size: 16px;
+  }
+
+  #bot .section {
+    padding: 0;
+  }
+
+  #bot .lead-gate {
+    margin: 0 16px;
+  }
 
   .bubble { max-width: 90%; font-size: 14px; }
 
@@ -1658,7 +1706,10 @@ function removeTyping() {
 
 function scroll() {
   const m = getMessages();
-  setTimeout(() => m.scrollTop = m.scrollHeight, 60);
+  setTimeout(() => {
+    m.scrollTop = m.scrollHeight;
+    m.scrollTo({ top: m.scrollHeight, behavior: 'smooth' });
+  }, 60);
 }
 
 function esc(t) {
