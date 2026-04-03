@@ -920,31 +920,38 @@ footer {
   nav { padding: 0 16px; height: 52px; }
   .nav-links { display: none; }
 
-  /* HERO — mobile first, punchy and immediate */
+  /* HERO — full viewport height, bold, immediate */
   .hero {
-    padding: 40px 20px 48px;
+    min-height: calc(100vh - 52px);
+    padding: 36px 20px 40px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .hero-eyebrow {
-    font-size: 11px;
-    gap: 6px;
-    margin-bottom: 16px;
+    font-size: 10px;
+    gap: 5px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
     justify-content: center;
   }
 
   .hero h1 {
-    font-size: 38px;
-    line-height: 1.05;
-    margin-bottom: 16px;
+    font-size: 52px;
+    line-height: 1.0;
+    margin-bottom: 18px;
     letter-spacing: -0.03em;
   }
 
   .hero-sub {
     font-size: 15px;
-    margin-bottom: 28px;
-    line-height: 1.65;
+    margin-bottom: 32px;
+    line-height: 1.7;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .hero-actions {
@@ -956,20 +963,20 @@ footer {
   .btn-primary {
     width: 100%;
     justify-content: center;
-    padding: 15px 24px;
-    font-size: 15px;
+    padding: 17px 24px;
+    font-size: 16px;
     border-radius: 12px;
   }
 
   .btn-secondary {
     width: 100%;
     justify-content: center;
-    padding: 13px 24px;
+    padding: 14px 24px;
     font-size: 14px;
   }
 
   .hero-profiles {
-    margin-top: 36px;
+    margin-top: 40px;
     gap: 8px;
     justify-content: center;
   }
