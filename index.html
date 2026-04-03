@@ -1779,9 +1779,34 @@ function scheduleUpdateEmail() {
   }, 2 * 60 * 1000);
 }
 
+// iOS keyboard handling — keeps header anchored when keyboard opens
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', () => {
+    const chat = document.getElementById('chatContainer');
+    if (!chat || !chat.classList.contains('visible')) return;
+    const navHeight = 52;
+    const vpHeight = window.visualViewport.height;
+    const vpTop = window.visualViewport.offsetTop;
+    chat.style.top = (navHeight + vpTop) + 'px';
+    chat.style.height = (vpHeight - navHeight) + 'px';
+    // Always scroll messages to bottom when keyboard opens
+    const msgs = document.getElementById('chatMessages');
+    if (msgs) msgs.scrollTop = msgs.scrollHeight;
+  });
+
+  window.visualViewport.addEventListener('scroll', () => {
+    const chat = document.getElementById('chatContainer');
+    if (!chat || !chat.classList.contains('visible')) return;
+    const navHeight = 52;
+    chat.style.top = (navHeight + window.visualViewport.offsetTop) + 'px';
+  });
+}
+
 function closeChat() {
   const chat = document.getElementById('chatContainer');
   chat.classList.remove('visible');
+  chat.style.top = '';
+  chat.style.height = '';
   document.getElementById('leadGate').style.display = 'block';
   window.scrollTo({ top: document.getElementById('bot').offsetTop - 60, behavior: 'smooth' });
 }
