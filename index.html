@@ -2331,13 +2331,14 @@ function showProfilePopup(data) {
   const overlay = document.createElement('div');
   overlay.className = 'profile-popup-overlay';
   overlay.id = 'profilePopup';
+  overlay.dataset.profileKey = data.profile;
   overlay.innerHTML = `
     <div class="profile-popup">
       <p class="popup-congrats">Your investor profile</p>
       <span class="popup-emoji">${emoji}</span>
       <p class="popup-profile-name" style="color:${color};">You're ${data.name}</p>
       <p class="popup-filter">"${data.filter}"</p>
-      <button class="popup-btn" style="background:${color};margin-bottom:8px;" onclick="closeProfilePopup()">
+      <button class="popup-btn" style="background:${color};margin-bottom:8px;" onclick="goToProfile(document.getElementById('profilePopup').dataset.profileKey)">
         See my results
       </button>
       <button class="popup-btn" style="background:transparent;color:${color};border:1.5px solid ${color};margin-top:0;" onclick="closeProfilePopup()">
