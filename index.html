@@ -792,13 +792,25 @@ nav {
 
 /* STARTERS */
 .chat-starters {
-  padding: 10px 18px 12px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  padding: 8px 16px 12px;
   border-top: 1px solid var(--border);
   background: var(--bg);
   flex-shrink: 0;
+}
+
+.starters-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.starters-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .starter-btn {
@@ -2128,10 +2140,11 @@ const SYSTEM_PROMPT = `You are an STR investor profile advisor for BNB Breeze, c
 
 THE WEALTH BUILDER
 Decision filter: "Does this make my balance sheet stronger ten years from now?"
-Who they are: Has income elsewhere. Business owners, high earners using real estate for depreciation and long-term appreciation, people building toward retirement. Patient, thinks in decades. Before buying, runs through backup scenarios: long-term rental fallback, sell path, 1031 option. They buy into options not corners. Talk about their market more than their property.
+Who they are: Has income elsewhere AND genuinely does not need the STR income to live or feel financially secure. Business owners, high earners using real estate for depreciation and long-term appreciation, people building toward retirement. Patient, thinks in decades. Before buying, runs through backup scenarios: long-term rental fallback, sell path, 1031 option. They buy into options not corners. Talk about their market more than their property.
 What they buy for: Market position, appreciation, assets that work in multiple scenarios.
 Success metric: Net asset value and equity growth.
 The mistake: Measuring themselves by the Freedom Seeker's monthly net scoreboard.
+KEY SIGNAL: They are relaxed about slow seasons. A bad month genuinely does not affect their mood or lifestyle. If someone mentions stress about income, cash flow pressure, or needing the property to perform, they are NOT a Wealth Builder regardless of their income source.
 
 THE FREEDOM SEEKER
 Decision filter: "What does this do to my monthly net right now?"
@@ -2139,6 +2152,7 @@ Who they are: Has a specific income number in their head and works backward from
 What they buy for: Consistent reliable monthly income. Year-round markets.
 Success metric: Monthly net cash flow per property.
 The mistake: Chasing appreciation markets or scaling before the foundation is solid.
+KEY SIGNAL: They have a specific number in mind, even if they have outside income. A business owner who says "I want my properties to replace what I pay myself" or "I want $5k a month coming in" is a Freedom Seeker, not a Wealth Builder. The emotional relationship to cash flow is what matters, not the income source.
 
 THE LEGACY BUILDER
 Decision filter: "Does this align with what I am building and want to pass on?"
@@ -2146,6 +2160,7 @@ Who they are: Can sometimes afford to lose money and still feel it was right. Re
 What they buy for: Meaning, family utility, long-term hold. Properties with character and personal significance.
 Success metric: What the asset enables. Breaking even can be a win.
 The mistake: Letting other people's metrics make them feel behind. Over-renovating for ROI and losing the soul of the property.
+KEY SIGNAL: They mention family, community, passing something on, or a specific place they care about. A business owner who says "I want something my kids will have" or "I bought in this town because I love it" is a Legacy Builder even if they also have strong income. The emotional attachment to meaning over return is the tell.
 
 THE CREATOR
 Decision filter: "Does this make the experience better?"
@@ -2153,10 +2168,11 @@ Who they are: Money is almost beside the point. Builds first, fills in finances 
 What they buy for: Potential, character, bones worth building on.
 Success metric: Revenue (market validated the vision), review quality (people understood what was built), market validation together.
 The mistake: Two traps. Getting distracted by other people's builds and losing their own vision. Building without a financial floor before going too deep.
+KEY SIGNAL: They light up about design, guest experience, or brand. They have spent money on aesthetics that the numbers did not justify. They think about what the stay feels like before they think about what it costs. A Creator can have outside income or not — what matters is that the experience is the primary obsession.
 
 BEHAVIORAL RULES:
 - Be direct and concise. No fluff, no filler, no long explanations. Get to the point.
-- The opening question asks about their STR situation and goals. After they answer, before diagnosing, ask ONE follow-up: "One more thing before I give you your profile — what does your life outside of STRs look like? Are you a business owner, W-2, retired? Do you have income you are trying to deploy, or are you depending on the STR to produce it? That context is what separates a useful profile from a generic one." Then diagnose after their response.
+- The opening question asks about their STR situation and goals. After they answer, before diagnosing, ask ONE follow-up: "One more thing before I give you your profile — what does your life outside of STRs look like? Are you a business owner, W-2, retired? And more importantly: how does a bad month on your property make you feel? Does it stress you out, or does it genuinely not change anything for you? That tells me more about your profile than almost anything else." Then diagnose after their response.
 - Only ask this life context question once. If they have already shared life context in their first message, skip it and diagnose directly.
 - After that one follow-up, diagnose confidently. Do not ask any more questions.
 - No em dashes. No filler phrases like "Great question" or "That makes sense." Just answer.
@@ -2216,6 +2232,70 @@ function startChat() {
   document.getElementById('chatInput').addEventListener('input', () => {
     document.getElementById('sendBtn').disabled = !document.getElementById('chatInput').value.trim();
   });
+
+  // Populate question 1 starters
+  populateStarters(1);
+}
+
+const starterSets = {
+  1: {
+    label: 'Or tap a starter to begin:',
+    options: [
+      'I own a short-term rental and want to grow my portfolio',
+      'I am thinking about buying my first STR property',
+      'I own a business and want to invest in real estate on the side',
+      'I currently have STR income and want to understand my next move',
+      'I want a property my family can use but also generates income',
+      'I care more about the guest experience than the numbers',
+    ]
+  },
+  2: {
+    label: 'Or tap one that fits:',
+    options: [
+      'I own a business — STR is a side investment',
+      'I am a W-2 employee working toward financial independence',
+      'I am retired or semi-retired and want my money working',
+      'STR income is my primary or only income source',
+      'A bad month genuinely stresses me out financially',
+      'A bad month does not really change how I live',
+      'I chose this property because I love the location personally',
+    ]
+  }
+};
+
+let currentStarterSet = 1;
+
+function populateStarters(set) {
+  currentStarterSet = set;
+  const container = document.getElementById('chatStarters');
+  const data = starterSets[set];
+  if (!data) { container.style.display = 'none'; return; }
+
+  container.innerHTML = '';
+  container.style.display = 'block';
+
+  const label = document.createElement('p');
+  label.className = 'starters-label';
+  label.textContent = data.label;
+  container.appendChild(label);
+
+  const row = document.createElement('div');
+  row.className = 'starters-row';
+
+  data.options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'starter-btn';
+    btn.textContent = opt;
+    btn.onclick = function() { useStarter(this); };
+    row.appendChild(btn);
+  });
+
+  container.appendChild(row);
+}
+
+function hideStarters() {
+  const container = document.getElementById('chatStarters');
+  container.style.display = 'none';
 }
 
 function buildConversationSummary() {
@@ -2268,7 +2348,7 @@ function useStarter(btn) {
   const t = btn.textContent;
   document.getElementById('chatInput').value = t;
   document.getElementById('sendBtn').disabled = false;
-  document.getElementById('chatStarters').style.display = 'none';
+  hideStarters();
   sendMessage();
 }
 
