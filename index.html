@@ -1211,9 +1211,9 @@ footer {
 // ===========================================
 // EMAILJS CONFIG — fill these in before deploy
 // ===========================================
-const EMAILJS_PUBLIC_KEY  = 'h2p6szLOTqQtHRxUM';   // From EmailJS > Account > General
-const EMAILJS_SERVICE_ID  = 'service_9h5v6dj';   // From EmailJS > Email Services
-const EMAILJS_TEMPLATE_ID = 'template_0b6p37r';  // From EmailJS > Email Templates
+const EMAILJS_PUBLIC_KEY  = 'h2p6szLOTqQtHRxUM';
+const EMAILJS_SERVICE_ID  = 'service_9h5v6dj';
+const EMAILJS_TEMPLATE_ID = 'template_0b6p37r';
 // ===========================================
 
 const SYSTEM_PROMPT = `You are an STR investor profile advisor for BNB Breeze, created by AJ Raber. Your job is to help investors identify which of four investor profiles they are, then give them useful, honest guidance based on that profile.
@@ -1311,28 +1311,25 @@ function startChat() {
   });
 }
 
-function sendLeadEmail(trigger) {
-  if (emailSent || !profileResult) return;
-  emailSent = true;
-  clearInactivityTimer();
-
-  const fullConversation = conversationLog
+function buildConversationSummary() {
+  return conversationLog
     .map(m => {
-      const role = m.role === 'user' ? leadInfo.name || 'User' : 'Advisor';
+      const role = m.role === 'user' ? (leadInfo.name || 'User') : 'Advisor';
       const content = m.content.replace(/PROFILE_RESULT:\{[\s\S]*?\}/g, '[Profile card delivered]');
       return role + ': ' + content;
     })
     .join('\n\n');
-  const userMessages = fullConversation;
+}
 
+function sendLeadEmail(trigger) {
+  if (!profileResult) return;
   const source = trigger || 'unknown';
-
   emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
     lead_name: leadInfo.name,
     lead_email: leadInfo.email,
     lead_company: leadInfo.company || 'Not provided',
     profile_name: profileResult.name,
-    conversation_summary: userMessages,
+    conversation_summary: buildConversationSummary(),
     submitted_at: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }) + ' (via ' + source + ')'
   }).then(() => {
     console.log('Lead email sent via', source);
@@ -1341,34 +1338,21 @@ function sendLeadEmail(trigger) {
   });
 }
 
-// Inactivity timer — fires after 3 minutes of no user input after profile is delivered
-let inactivityTimer = null;
-
-function resetInactivityTimer() {
-  if (!profileResult || emailSent) return;
-  clearInactivityTimer();
-  inactivityTimer = setTimeout(() => {
-    sendLeadEmail('inactivity');
-  }, 3 * 60 * 1000);
+function scheduleUpdateEmail() {
+  if (!profileResult) return;
+  if (updateTimer) clearTimeout(updateTimer);
+  updateTimer = setTimeout(() => {
+    sendLeadEmail('conversation update');
+    updateTimer = null;
+  }, 2 * 60 * 1000);
 }
 
-function clearInactivityTimer() {
-  if (inactivityTimer) {
-    clearTimeout(inactivityTimer);
-    inactivityTimer = null;
-  }
-}
-
-// Fire on tab close, navigate away, or refresh
 window.addEventListener('beforeunload', () => {
-  if (!emailSent && profileResult) {
-    sendLeadEmail('page exit');
-  }
+  if (profileResult) sendLeadEmail('page exit');
 });
 
-// Fire when user switches tabs or minimizes — more reliable than beforeunload on mobile
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'hidden' && !emailSent && profileResult) {
+  if (document.visibilityState === 'hidden' && profileResult) {
     sendLeadEmail('tab hidden');
   }
 });
@@ -1436,7 +1420,6 @@ function addProfileCard(data, followUp) {
   getMessages().appendChild(el);
   profileResult = data;
   sendLeadEmail('profile delivered');
-  initialEmailSent = true;
   if (followUp) setTimeout(() => addBotMsg(followUp), 350);
   setTimeout(() => addEndConvoButton(), followUp ? 1800 : 800);
   scroll();
@@ -1494,7 +1477,6 @@ function buildConversationSummary() {
 }
 
 let updateTimer = null;
-let initialEmailSent = false;
 
 function scheduleUpdateEmail() {
   if (!profileResult) return;
@@ -1509,7 +1491,7 @@ function endConversation() {
   const btn = document.getElementById('endConvoBtn');
   if (btn) btn.remove();
   if (updateTimer) { clearTimeout(updateTimer); updateTimer = null; }
-  sendLeadEmail('done button');
+  sendLeadEmail('done button - full conversation');
   addBotMsg('Thanks for chatting. If you ever want to think through a specific decision, evaluate a potential buy, or talk through how your current operations fit your investor profile, come back anytime. You can also learn more about how BNB Breeze works with investors at bnbbreeze.co.');
 }
 
@@ -1527,7 +1509,7 @@ async function sendMessage() {
   addUserMsg(text);
   messages.push({ role: 'user', content: text });
   conversationLog.push({ role: 'user', content: text });
-  if (profileResult && initialEmailSent) scheduleUpdateEmail();
+  if (profileResult) scheduleUpdateEmail();
 
   addTyping();
 
