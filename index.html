@@ -920,43 +920,47 @@ footer {
   nav { padding: 0 16px; height: 52px; }
   .nav-links { display: none; }
 
-  /* HERO — full viewport height, bold, immediate */
+  /* HERO — tight to top, title dominates */
   .hero {
     min-height: calc(100vh - 52px);
-    padding: 36px 20px 40px;
+    padding: 28px 20px 32px;
     text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .hero-eyebrow {
-    font-size: 10px;
-    gap: 5px;
-    margin-bottom: 20px;
+    font-size: 9px;
+    gap: 4px;
+    margin-bottom: 16px;
     flex-wrap: wrap;
     justify-content: center;
+    letter-spacing: 0.04em;
   }
 
+  .eyebrow-dot { width: 3px; height: 3px; }
+
   .hero h1 {
-    font-size: 52px;
-    line-height: 1.0;
-    margin-bottom: 18px;
+    font-size: 58px;
+    line-height: 0.98;
+    margin-bottom: 16px;
     letter-spacing: -0.03em;
   }
 
   .hero-sub {
-    font-size: 15px;
-    margin-bottom: 32px;
-    line-height: 1.7;
-    max-width: 320px;
+    font-size: 14px;
+    margin-bottom: 28px;
+    line-height: 1.65;
+    max-width: 300px;
     margin-left: auto;
     margin-right: auto;
+    color: var(--muted);
   }
 
   .hero-actions {
     flex-direction: column;
-    gap: 10px;
+    gap: 0;
     width: 100%;
   }
 
@@ -966,24 +970,21 @@ footer {
     padding: 17px 24px;
     font-size: 16px;
     border-radius: 12px;
+    margin-bottom: 0;
   }
 
-  .btn-secondary {
-    width: 100%;
-    justify-content: center;
-    padding: 14px 24px;
-    font-size: 14px;
-  }
+  .btn-secondary { display: none; }
 
   .hero-profiles {
-    margin-top: 40px;
-    gap: 8px;
+    margin-top: auto;
+    padding-top: 32px;
+    gap: 7px;
     justify-content: center;
   }
 
   .profile-badge {
     font-size: 11px;
-    padding: 5px 11px;
+    padding: 5px 10px;
   }
 
   /* AI PILLS */
@@ -999,7 +1000,7 @@ footer {
   }
 
   /* BOT SECTION */
-  .bot-section { padding: 44px 0; }
+  .bot-section { padding: 32px 0 40px; }
 
   .section { padding: 0 16px; }
 
@@ -1007,20 +1008,26 @@ footer {
 
   .section-sub { font-size: 14px; }
 
+  /* Hide text intro on mobile — form is the focus */
+  #bot .section-label { display: none; }
+  #bot .section-title { display: none; }
+  #bot .section-sub { display: none; }
+  .ai-features { display: none; }
+
   /* LEAD GATE */
   .lead-gate {
     padding: 24px 18px;
     border-radius: 14px;
   }
 
-  .lead-gate h3 { font-size: 19px; }
+  .lead-gate h3 { font-size: 20px; margin-bottom: 4px; }
 
   .lead-gate p { font-size: 13px; margin-bottom: 20px; }
 
-  .form-input { font-size: 16px; } /* prevents iOS zoom on focus */
+  .form-input { font-size: 16px; }
 
   .form-submit {
-    padding: 14px;
+    padding: 15px;
     font-size: 15px;
     border-radius: 10px;
   }
