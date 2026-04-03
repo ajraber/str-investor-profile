@@ -1754,6 +1754,14 @@ footer {
       <p class="form-privacy">No spam. Your information is only used to send you your profile result. BNB Breeze may follow up if we think we can help.</p>
     </div>
 
+    <!-- RESUME BUTTON (shown after profile delivered, chat closed on mobile) -->
+    <div id="resumeChatWrap" style="display:none;text-align:center;padding:20px 0 0;">
+      <button onclick="reopenChat()" style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:#fff;background:var(--brand);border:none;border-radius:10px;padding:13px 28px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Resume my AI conversation
+      </button>
+    </div>
+
     <!-- CHAT -->
     <div class="chat-container" id="chatContainer">
       <div class="chat-header">
@@ -2450,13 +2458,18 @@ function showNudgePopup() {
   nudge.innerHTML = `
     <span class="nudge-icon">💬</span>
     <div class="nudge-text">
-      <strong>Want deeper insight?</strong>
-      Scroll back up to chat with the AI about your specific situation.
+      <strong>Now that you know your profile</strong>
+      Scroll back up to the chat to go deeper with AI.
     </div>
     <span class="nudge-close">×</span>`;
   nudge.onclick = function(e) {
     dismissNudge();
-    window.scrollTo({ top: document.getElementById('bot').offsetTop - 60, behavior: 'smooth' });
+    const isMobile = window.innerWidth <= 600;
+    if (isMobile && profileResult) {
+      reopenChat();
+    } else {
+      window.scrollTo({ top: document.getElementById('bot').offsetTop - 60, behavior: 'smooth' });
+    }
   };
   nudge.querySelector('.nudge-close').onclick = function(e) {
     e.stopPropagation();
@@ -2484,12 +2497,12 @@ function goToProfile(profileKey) {
   };
   const anchorId = anchors[profileKey] || 'profiles';
 
-  // On mobile: close the chat first then scroll
+  // On mobile: hide chat visually but preserve all state
   const chat = document.getElementById('chatContainer');
   const isMobile = window.innerWidth <= 600;
   if (isMobile && chat && chat.classList.contains('visible')) {
     chat.classList.remove('visible');
-    document.getElementById('leadGate').style.display = 'block';
+    // DO NOT show leadGate or reset anything
   }
 
   setTimeout(() => {
@@ -2519,6 +2532,12 @@ function goToProfile(profileKey) {
       }
     }
   }, isMobile ? 400 : 100);
+
+  // Show resume button on mobile
+  if (window.innerWidth <= 600) {
+    const resumeWrap = document.getElementById('resumeChatWrap');
+    if (resumeWrap) resumeWrap.style.display = 'block';
+  }
 
   // Show nudge after 30 seconds to bring them back to chat
   if (nudgeTimer) clearTimeout(nudgeTimer);
@@ -2663,10 +2682,36 @@ function scheduleUpdateEmail() {
 }
 
 function closeChat() {
-  const chat = document.getElementById('chatContainer');
-  chat.classList.remove('visible');
-  document.getElementById('leadGate').style.display = 'block';
+  // On mobile just scroll to bot section — keep chat state intact
+  const isMobile = window.innerWidth <= 600;
+  if (isMobile) {
+    const chat = document.getElementById('chatContainer');
+    chat.classList.remove('visible');
+    // Do NOT show lead gate or reset — preserve conversation
+  }
   window.scrollTo({ top: document.getElementById('bot').offsetTop - 60, behavior: 'smooth' });
+}
+
+function reopenChat() {
+  const chat = document.getElementById('chatContainer');
+  if (!chat || !profileResult) return;
+
+  // Hide resume button
+  const resumeWrap = document.getElementById('resumeChatWrap');
+  if (resumeWrap) resumeWrap.style.display = 'none';
+
+  chat.classList.add('visible');
+
+  // Add welcome-back message with 4 options if not already shown
+  if (!chat.dataset.welcomeBackShown) {
+    chat.dataset.welcomeBackShown = 'true';
+    setTimeout(() => {
+      addBotMsg('Now that you know your profile, what would you like to dig into? You can ask me anything or pick one of these:');
+      setTimeout(() => addSuggestedActions(profileResult), 400);
+    }, 300);
+  }
+
+  scroll();
 }
 
 function endConversation() {
