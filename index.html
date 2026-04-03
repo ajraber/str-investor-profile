@@ -688,6 +688,120 @@ nav {
 .send-btn:disabled { opacity: 0.25; cursor: not-allowed; }
 .send-btn svg { width: 15px; height: 15px; }
 
+
+/* ACCORDION DEEP DIVES */
+.profile-accordion {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.accordion-trigger {
+  width: calc(100% - 44px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 16px 22px;
+  padding: 10px 18px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--brand);
+  text-align: center;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.accordion-trigger:hover { background: var(--blue-bg); border-color: var(--blue-mid); }
+
+.accordion-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.accordion-trigger.open .accordion-icon { transform: rotate(180deg); }
+
+.accordion-body {
+  display: none;
+  padding: 0 22px 22px;
+  border-top: 0.5px solid var(--border);
+}
+
+.accordion-body.open { display: block; }
+
+.accordion-section { margin-bottom: 20px; }
+.accordion-section:last-child { margin-bottom: 0; }
+
+.accordion-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+  margin-top: 16px;
+}
+
+.accordion-text {
+  font-size: 13px;
+  color: #3A3630;
+  line-height: 1.7;
+}
+
+.accordion-text p { margin-bottom: 8px; }
+.accordion-text p:last-child { margin-bottom: 0; }
+
+.mistake-block {
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-top: 4px;
+}
+
+.mistake-block strong {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+
+.mistake-block p {
+  font-size: 13px;
+  line-height: 1.65;
+  color: #3A3630;
+  margin-bottom: 8px;
+}
+
+.mistake-block p:last-child { margin-bottom: 0; }
+
+.ignore-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 20px;
+  margin-top: 4px;
+}
+
+.mis-wb { background: #EBF3FD; }
+.mis-wb strong { color: #1B4F8A; }
+.mis-fs { background: #EAF3DE; }
+.mis-fs strong { color: #2D5A1E; }
+.mis-lb { background: #EEEDFE; }
+.mis-lb strong { color: #3C2E8A; }
+.mis-cr { background: #FDF0DC; }
+.mis-cr strong { color: #7A4A0A; }
+
+.ign-wb { background: #EBF3FD; color: #1B4F8A; }
+.ign-fs { background: #EAF3DE; color: #2D5A1E; }
+.ign-lb { background: #EEEDFE; color: #3C2E8A; }
+.ign-cr { background: #FDF0DC; color: #7A4A0A; }
+
+
 /* PROFILES SECTION */
 .profiles-section { padding: 64px 0 80px; }
 
@@ -1338,6 +1452,42 @@ footer {
             <div class="pc-mistake"><strong>Measuring yourself by the Freedom Seeker's scoreboard.</strong>Chasing RevPAR benchmarks and monthly net conversations that have nothing to do with your actual goal.</div>
           </div>
         </div>
+      <div class="profile-accordion" id="acc-wb">
+        <button class="accordion-trigger" onclick="toggleAccordion('wb')">
+          See full Wealth Builder profile
+          <svg class="accordion-icon" viewBox="0 0 18 18" fill="none"><path d="M4 7l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-body" id="body-wb">
+          <p class="accordion-label">Who they are</p>
+          <div class="accordion-text">
+            <p>The Wealth Builder has income elsewhere and is not depending on what the property makes to live. They are the business owner putting money somewhere other than the stock market. The high earner using real estate for depreciation and long-term appreciation. The person building a portfolio on the side with retirement in mind.</p>
+            <p>They are patient in a way that makes other investors uncomfortable. They can sit through a slow season, a tough rate environment, a year where the numbers are flat, and not flinch. Not because they are not paying attention, but because the month-to-month is not the game they are playing.</p>
+            <p>Before they buy, they have already mapped out every scenario. What does this look like as a long-term rental if the STR market softens? What is the exit if they need to sell in year five? Can they 1031 into something else down the road? They do not buy into a corner. They buy into options.</p>
+          </div>
+
+          <p class="accordion-label">What they look for in a buy</p>
+          <div class="accordion-text">
+            <p>They evaluate the market before they evaluate the property. They want to know where the region is heading, what is driving long-term demand, and what the ten-year trajectory looks like.</p>
+            <p>On the property itself they want good bones, a defensible location, something near a growing resort or a market with infrastructure investment coming. Less concerned with turnkey. More concerned with position.</p>
+            <p>Cash flow needs to work well enough to hold the asset comfortably. It does not need to be exceptional. The deal does not need to pencil as a cash flow play. It needs to pencil as a long-term wealth play.</p>
+          </div>
+
+          <p class="accordion-label">What success looks like</p>
+          <div class="accordion-text">
+            <p>Success is net asset value growing over time. Equity building through appreciation and debt paydown. Looking at the portfolio in five years and seeing something worth meaningfully more than what they put in.</p>
+            <p>They are not checking their Airbnb dashboard obsessively. They are checking their balance sheet. A month where the property breaks even but the market appreciated three percent is not a bad month. It is a good one.</p>
+          </div>
+
+          <p class="accordion-label">Weaknesses and what to ignore</p>
+          <div class="mistake-block mis-wb">
+            <strong>Patience can become passivity.</strong>
+            <p>The Wealth Builder is so comfortable holding that they can miss signals a market or property is actually deteriorating, not just going through a slow season. They can also over-concentrate in one or two properties in one market and convince themselves it is a long-term play when it is really just undiversified risk.</p>
+            <strong>What pulls them off course.</strong>
+            <p>Monthly cash flow benchmarks from operators. RevPAR reports. Occupancy conversations. Seeing a Freedom Seeker post their monthly net and starting to wonder if their property is underperforming. It is not. It is just on a different clock.</p>
+            <span class="ignore-tag ign-wb">Tune out: anyone measuring you in months when your game is measured in years.</span>
+          </div>
+        </div>
+      </div>
       </div>
 
       <div class="profile-card pc-fs" id="freedom-seeker">
@@ -1369,6 +1519,42 @@ footer {
             <div class="pc-mistake"><strong>Chasing appreciation markets or scaling before stabilizing.</strong>The Freedom Seeker's strength is discipline. Stay in your lane and only move when the foundation is solid.</div>
           </div>
         </div>
+      <div class="profile-accordion" id="acc-fs">
+        <button class="accordion-trigger" onclick="toggleAccordion('fs')">
+          See full Freedom Seeker profile
+          <svg class="accordion-icon" viewBox="0 0 18 18" fill="none"><path d="M4 7l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-body" id="body-fs">
+          <p class="accordion-label">Who they are</p>
+          <div class="accordion-text">
+            <p>The Freedom Seeker has a specific income number in their head and is working backward from it. Maybe they are still in a day job and every property they buy is one step closer to leaving it. Maybe they already left and STR income is the income now.</p>
+            <p>They are frugal and hands-on, not because they do not have options, but because every dollar saved in expenses is a dollar that buys more freedom. They know their numbers cold: cost per clean, ADR by month, net per property.</p>
+            <p>A bad month is not just a data point. It affects how they feel and how they live. That is not a weakness. It is a signal. It means the investment is doing exactly what it is supposed to do for them, and they take it seriously because it matters.</p>
+          </div>
+
+          <p class="accordion-label">What they look for in a buy</p>
+          <div class="accordion-text">
+            <p>They run the numbers before they fall in love with the property. They have a floor and if the property does not clear it, they walk away no matter how much they like it.</p>
+            <p>They want markets that perform consistently, not markets that peak in summer and go quiet in winter. Reliability matters more than upside. They want properties that can be operated efficiently and deliver predictable income month over month.</p>
+            <p>They are also thinking about scalability. Can this be replicated? Can they add another one without losing control of the operation? The buy is not just about what the property makes, it is about what it adds to the system they are building.</p>
+          </div>
+
+          <p class="accordion-label">What success looks like</p>
+          <div class="accordion-text">
+            <p>Success is a specific number hitting their account every month. It is the day they hand in their notice. It is financial independence built property by property, dollar by dollar.</p>
+            <p>They are not measuring themselves on what their portfolio is worth on paper. They are measuring themselves on what it produces. Net cash flow per property and total monthly income are the only metrics that really matter.</p>
+          </div>
+
+          <p class="accordion-label">Weaknesses and what to ignore</p>
+          <div class="mistake-block mis-fs">
+            <strong>The model is fragile if they scale too fast or too thin.</strong>
+            <p>They are often one bad season or one major repair away from the whole thing feeling precarious. That pressure can push them into bad decisions: buying in a market they do not understand, cutting corners on maintenance, or underpricing to keep occupancy up at the expense of margin.</p>
+            <strong>What pulls them off course.</strong>
+            <p>Appreciation stories from Wealth Builders. Design inspiration from Creators. Legacy thinking from Legacy Builders. All of it is noise for someone whose game is monthly net. They can start feeling like they are missing something when they are actually executing well on exactly the right strategy.</p>
+            <span class="ignore-tag ign-fs">Tune out: what their portfolio is worth on paper. That number is irrelevant until they sell.</span>
+          </div>
+        </div>
+      </div>
       </div>
 
       <div class="profile-card pc-lb" id="legacy-builder">
@@ -1400,6 +1586,42 @@ footer {
             <div class="pc-mistake"><strong>Letting other people's metrics make you feel behind.</strong>Over-renovating for ROI and losing the soul of something you bought for completely different reasons.</div>
           </div>
         </div>
+      <div class="profile-accordion" id="acc-lb">
+        <button class="accordion-trigger" onclick="toggleAccordion('lb')">
+          See full Legacy Builder profile
+          <svg class="accordion-icon" viewBox="0 0 18 18" fill="none"><path d="M4 7l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-body" id="body-lb">
+          <p class="accordion-label">Who they are</p>
+          <div class="accordion-text">
+            <p>The Legacy Builder can sometimes afford to lose money on a property and still feel like it was the right call. The return is real but it is measured in things that do not show up on a P&L: relationships, memories, what gets passed to the next generation.</p>
+            <p>They are deeply relational in how they make decisions. They want the asset protected more than optimized. The property manager they hire is not just a vendor. It is someone they trust with something that matters to them.</p>
+            <p>You see this as the family destination owner whose lake house the whole family uses every summer. The estate planner thinking about generational transfer. The community investor who chose a market they care about. And the evolved Freedom Seeker who built the income, got the freedom, and realized they wanted more than a number.</p>
+          </div>
+
+          <p class="accordion-label">What they look for in a buy</p>
+          <div class="accordion-text">
+            <p>They choose location with their heart as much as their head. They are drawn to properties with character, history, or personal significance. A mountain town their family has always loved. A small coastal community they want to contribute to. A farmhouse that has a story.</p>
+            <p>They want something they will hold for a long time, possibly forever. Good bones, a location that will hold its value, something they can maintain and invest in over decades without it feeling like a burden.</p>
+            <p>The numbers need to work well enough that holding is not painful. They are not looking for exceptional yield. They are looking for a property that sustains itself financially while delivering the non-financial returns they actually care about.</p>
+          </div>
+
+          <p class="accordion-label">What success looks like</p>
+          <div class="accordion-text">
+            <p>Success is the family gathering at that property every year and it being the place everyone looks forward to. It is passing the asset to the next generation with meaning attached to it.</p>
+            <p>Breaking even is a win if everything else is working. They are not indifferent to the financial return, but it is not the headline. The headline is what the property enables, not what it produces.</p>
+          </div>
+
+          <p class="accordion-label">Weaknesses and what to ignore</p>
+          <div class="mistake-block mis-lb">
+            <strong>Emotional attachment can override good judgment.</strong>
+            <p>They hold assets too long past their useful life, spend money on renovations that serve the family but not the property's financial health, and resist management changes because the relationship feels too personal. They can also be taken advantage of by vendors and managers who sense their emotional investment and use it as leverage.</p>
+            <strong>What pulls them off course.</strong>
+            <p>Yield conversations. Cap rate comparisons. Anyone telling them their property is not performing to its potential. They feel pressure to optimize something they never bought to optimize. The other distraction is seeing other investors scale and feeling like they should be doing the same. They do not need to scale. One right property held forever is a complete strategy.</p>
+            <span class="ignore-tag ign-lb">Tune out: exit conversations. The exit is not the goal. Holding is.</span>
+          </div>
+        </div>
+      </div>
       </div>
 
       <div class="profile-card pc-cr" id="creator">
@@ -1431,6 +1653,42 @@ footer {
             <div class="pc-mistake"><strong>Getting distracted by other people's builds or building without a financial floor.</strong>Your competitive advantage is your point of view. Protect the vision and run the numbers early.</div>
           </div>
         </div>
+      <div class="profile-accordion" id="acc-cr">
+        <button class="accordion-trigger" onclick="toggleAccordion('cr')">
+          See full Creator profile
+          <svg class="accordion-icon" viewBox="0 0 18 18" fill="none"><path d="M4 7l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="accordion-body" id="body-cr">
+          <p class="accordion-label">Who they are</p>
+          <div class="accordion-text">
+            <p>The Creator is the only one of these four investors where money is almost beside the point. They build first and fill in the finances after. They believe that if you build something exceptional the returns will follow, and they are usually right. This is not naivety. It is a completely different operating system.</p>
+            <p>They are the design-obsessed host whose interior every single guest mentions in their review. The brand builder with a name, a logo, a website, and direct bookings from guests who come back asking for them specifically. The unique property hunter who seeks out A-frames, converted barns, domes, and historic buildings because comps do not apply. Not competing on price. Competing on category.</p>
+            <p>The tell is how they light up when they talk about their property. There is an energy there that is not about the return. It is about what they built. Their reviews are long and specific. Guests do not just say it was clean and comfortable. They describe an experience.</p>
+          </div>
+
+          <p class="accordion-label">What they look for in a buy</p>
+          <div class="accordion-text">
+            <p>They are not looking for a property that pencils on a spreadsheet. They are looking for potential, character, something they can work with. Unusual architecture. A setting that is hard to replicate. A space that has bones worth building on.</p>
+            <p>They are asking: what could this become? Not what is this worth right now. They are willing to put in the time, the money, and the creative energy to take something from unremarkable to unforgettable. That transformation is part of what they are buying.</p>
+            <p>They think about the guest experience before they think about the guest volume. Premium demand follows premium product. If they build it right, they will not need to compete on price.</p>
+          </div>
+
+          <p class="accordion-label">What success looks like</p>
+          <div class="accordion-text">
+            <p>Success is a full calendar at a rate nobody else in the market can justify. It is a review that goes two paragraphs describing what it felt like to stay there. It is a guest who books again six months later and tells their friends.</p>
+            <p>Revenue matters as proof of concept. Strong revenue tells the Creator the market validated their vision. Reviews tell them people understood what they built. Together those two things are the market saying you were right. And more than any other investor type, the Creator needs to hear that.</p>
+          </div>
+
+          <p class="accordion-label">Weaknesses and what to ignore</p>
+          <div class="mistake-block mis-cr">
+            <strong>The build can become the point instead of the means.</strong>
+            <p>They can overspend on the vision, run thin on cash, and then be unable to sustain the property through a slow season because the financial model was never built to survive one. They can also get addicted to the launch, moving on to the next project before the first one is actually stable.</p>
+            <strong>What pulls them off course.</strong>
+            <p>Other people's revenue numbers. Other people's designs. Any conversation that pulls them off their own vision. They are uniquely vulnerable to comparison because their product is so personal. Seeing another property doing well can feel like a judgment on theirs, even when it has nothing to do with them.</p>
+            <span class="ignore-tag ign-cr">Tune out: profit margin conversations from operators running lean. The Creator is not running lean. They are running premium. Those are different businesses.</span>
+          </div>
+        </div>
+      </div>
       </div>
 
     </div>
@@ -1549,7 +1807,7 @@ BEHAVIORAL RULES:
 - When delivering a profile result, output this JSON on its own line:
 PROFILE_RESULT:{"profile":"wealth_builder","name":"The Wealth Builder","filter":"Does this make my balance sheet stronger ten years from now?","summary":"[2-3 sentence personalized summary]","focus":["focus area 1","focus area 2","focus area 3"],"metric":"Net asset value and equity growth"}
 Profile keys: wealth_builder, freedom_seeker, legacy_builder, creator
-Then continue with a warm follow-up after the JSON line.
+Then continue with a warm follow-up after the JSON line. Always include a line telling them to scroll down on this page to find their profile card and tap "See full [profile name] profile" for the complete breakdown including what to look for in a buy, what success looks like, and the mistakes to watch out for. Keep it natural, not robotic.
 
 BNB BREEZE PLUGS:
 - BNB Breeze is a short-term rental property management company. Website: bnbbreeze.co
@@ -1882,6 +2140,22 @@ async function submitContact() {
     document.getElementById('contactBtnArrow').style.display = 'block';
     alert('Something went wrong. Please try emailing us directly at aj@bnbbreeze.co');
   }
+}
+
+
+function toggleAccordion(id) {
+  const body = document.getElementById('body-' + id);
+  const trigger = body.previousElementSibling;
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  trigger.classList.toggle('open', !isOpen);
+  trigger.textContent = '';
+  const labels = {
+    wb: 'Wealth Builder', fs: 'Freedom Seeker',
+    lb: 'Legacy Builder', cr: 'Creator'
+  };
+  trigger.innerHTML = (isOpen ? 'See full ' : 'Hide ') + labels[id] + ' profile' +
+    '<svg class="accordion-icon" viewBox="0 0 18 18" fill="none"><path d="M4 7l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 }
 
 </script>
