@@ -914,6 +914,8 @@ footer {
 .chat-messages::-webkit-scrollbar-track { background: transparent; }
 .chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
+.hero-profile-grid { display: none; }
+
 @media (max-width: 600px) {
 
   /* NAV */
@@ -922,8 +924,7 @@ footer {
 
   /* HERO — tight to top, title dominates */
   .hero {
-    min-height: calc(100vh - 52px);
-    padding: 28px 20px 32px;
+    padding: 32px 20px 40px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -975,17 +976,53 @@ footer {
 
   .btn-secondary { display: none; }
 
-  .hero-profiles {
-    margin-top: auto;
-    padding-top: 32px;
-    gap: 7px;
-    justify-content: center;
+  /* Hide old badges on mobile */
+  .hero-profiles { display: none; }
+
+  /* Profile preview grid */
+  .hero-profile-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 24px;
+    padding-top: 0;
+    width: 100%;
   }
 
-  .profile-badge {
-    font-size: 11px;
-    padding: 5px 10px;
+  .hero-profile-card {
+    border-radius: 12px;
+    padding: 12px 13px;
+    text-align: left;
   }
+
+  .hpc-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    opacity: 0.7;
+  }
+
+  .hpc-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 5px;
+  }
+
+  .hpc-filter {
+    font-size: 10px;
+    line-height: 1.4;
+    opacity: 0.75;
+    font-style: italic;
+  }
+
+  .hpc-blue { background: #EBF3FD; color: #1B4F8A; }
+  .hpc-green { background: #EAF3DE; color: #2D5A1E; }
+  .hpc-purple { background: #EEEDFE; color: #3C2E8A; }
+  .hpc-amber { background: #FDF0DC; color: #7A4A0A; }
 
   /* AI PILLS */
   .ai-features {
@@ -1020,7 +1057,7 @@ footer {
     border-radius: 14px;
   }
 
-  .lead-gate h3 { font-size: 20px; margin-bottom: 4px; }
+  .lead-gate h3 { font-size: 26px !important; margin-bottom: 4px; }
 
   .lead-gate p { font-size: 13px; margin-bottom: 20px; }
 
@@ -1100,6 +1137,29 @@ footer {
       <a href="#legacy-builder" class="profile-badge badge-purple">The Legacy Builder</a>
       <a href="#creator" class="profile-badge badge-amber">The Creator</a>
     </div>
+
+    <div class="hero-profile-grid">
+      <a href="#bot" class="hpc-blue hero-profile-card" style="text-decoration:none;">
+        <p class="hpc-label">Profile 1</p>
+        <p class="hpc-name">The Wealth Builder</p>
+        <p class="hpc-filter">"Does this grow my balance sheet in 10 years?"</p>
+      </a>
+      <a href="#bot" class="hpc-green hero-profile-card" style="text-decoration:none;">
+        <p class="hpc-label">Profile 2</p>
+        <p class="hpc-name">The Freedom Seeker</p>
+        <p class="hpc-filter">"What does this do to my monthly net?"</p>
+      </a>
+      <a href="#bot" class="hpc-purple hero-profile-card" style="text-decoration:none;">
+        <p class="hpc-label">Profile 3</p>
+        <p class="hpc-name">The Legacy Builder</p>
+        <p class="hpc-filter">"Does this align with what I want to pass on?"</p>
+      </a>
+      <a href="#bot" class="hpc-amber hero-profile-card" style="text-decoration:none;">
+        <p class="hpc-label">Profile 4</p>
+        <p class="hpc-name">The Creator</p>
+        <p class="hpc-filter">"Does this make the experience better?"</p>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -1120,7 +1180,7 @@ footer {
         <span class="ai-pill">What to focus on</span>
       </div>
     <div class="lead-gate" id="leadGate">
-      <h3>Start your AI analysis</h3>
+      <h3 style="font-family:'DM Serif Display',serif;font-size:28px;font-weight:400;color:#1B6FA8;letter-spacing:-0.01em;margin-bottom:6px;">Your AI investor advisor is waiting.</h3>
       <p>Enter your details and start chatting with a live AI STR advisor. It will analyze your situation, identify your investor profile, and give you honest feedback you can actually use.</p>
       <div class="form-field">
         <label class="form-label" for="leadName">Your name</label>
