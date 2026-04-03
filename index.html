@@ -2064,7 +2064,7 @@ BEHAVIORAL RULES:
 - When delivering a profile result, output this JSON on its own line:
 PROFILE_RESULT:{"profile":"wealth_builder","name":"The Wealth Builder","filter":"Does this make my balance sheet stronger ten years from now?","summary":"[2-3 sentence personalized summary]","focus":["focus area 1","focus area 2","focus area 3"],"metric":"Net asset value and equity growth"}
 Profile keys: wealth_builder, freedom_seeker, legacy_builder, creator
-After the JSON write ONE short sentence max. The popup and suggested actions handle the rest.
+After the JSON write ONE short sentence max. Never tell people to scroll down — they are in the chat and cannot scroll. The popup handles navigation.
 
 BNB BREEZE PLUGS:
 - BNB Breeze is a short-term rental property management company. Website: bnbbreeze.co
@@ -2234,10 +2234,12 @@ function showProfilePopup(data) {
       <span class="popup-emoji">${emoji}</span>
       <p class="popup-profile-name" style="color:${color};">You're ${data.name}</p>
       <p class="popup-filter">"${data.filter}"</p>
-      <button class="popup-btn" style="background:${color};" onclick="closeProfilePopup()">
+      <button class="popup-btn" style="background:${color};margin-bottom:8px;" onclick="closeProfilePopup()">
+        Keep chatting
+      </button>
+      <button class="popup-btn" style="background:transparent;color:${color};border:1.5px solid ${color};margin-top:0;" onclick="goToProfile('${data.profile}')">
         See my full breakdown
       </button>
-      <p class="popup-sub">Scroll down to find your profile card on this page</p>
     </div>`;
   document.body.appendChild(overlay);
   overlay.addEventListener('click', function(e) {
@@ -2252,6 +2254,54 @@ function closeProfilePopup() {
     popup.style.transition = 'opacity 0.2s ease';
     setTimeout(() => popup.remove(), 200);
   }
+}
+
+function goToProfile(profileKey) {
+  closeProfilePopup();
+  // Map profile key to anchor id
+  const anchors = {
+    wealth_builder: 'wealth-builder',
+    freedom_seeker: 'freedom-seeker',
+    legacy_builder: 'legacy-builder',
+    creator: 'creator'
+  };
+  const anchorId = anchors[profileKey] || 'profiles';
+
+  // On mobile: close the chat first then scroll
+  const chat = document.getElementById('chatContainer');
+  const isMobile = window.innerWidth <= 600;
+  if (isMobile && chat && chat.classList.contains('visible')) {
+    chat.classList.remove('visible');
+    document.getElementById('leadGate').style.display = 'block';
+  }
+
+  setTimeout(() => {
+    const el = document.getElementById(anchorId);
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY - 70;
+      window.scrollTo({ top, behavior: 'smooth' });
+      // Auto-open the accordion for their profile
+      const bodyEl = document.getElementById('body-' + profileKey.replace('_', '-').replace('_builder','').replace('_seeker','').replace('_builder',''));
+      // Map to accordion ids
+      const accMap = {
+        wealth_builder: 'wb',
+        freedom_seeker: 'fs',
+        legacy_builder: 'lb',
+        creator: 'cr'
+      };
+      const accId = accMap[profileKey];
+      if (accId) {
+        const accBody = document.getElementById('body-' + accId);
+        const accTrigger = accBody ? accBody.previousElementSibling : null;
+        if (accBody && !accBody.classList.contains('open')) {
+          accBody.classList.add('open');
+          if (accTrigger) accTrigger.classList.add('open');
+          const labels = { wb: 'Wealth Builder', fs: 'Freedom Seeker', lb: 'Legacy Builder', cr: 'Creator' };
+          if (accTrigger) accTrigger.innerHTML = 'Hide ' + labels[accId] + ' profile <svg class="accordion-icon" viewBox="0 0 18 18" fill="none"><path d="M4 7l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        }
+      }
+    }
+  }, isMobile ? 400 : 100);
 }
 
 function addSuggestedActions(data) {
