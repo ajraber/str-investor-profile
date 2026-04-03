@@ -84,6 +84,135 @@ body {
   font-weight: 400;
 }
 
+
+/* PROFILE REVEAL POPUP */
+.profile-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeIn 0.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.profile-popup {
+  background: var(--surface);
+  border-radius: 20px;
+  padding: 36px 32px 28px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+  animation: popUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes popUp {
+  from { opacity: 0; transform: scale(0.88) translateY(16px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.popup-congrats {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.popup-emoji {
+  font-size: 48px;
+  margin-bottom: 12px;
+  display: block;
+  animation: bounce 0.6s ease 0.3s both;
+}
+
+@keyframes bounce {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.popup-profile-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+
+.popup-filter {
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  padding: 0 8px;
+}
+
+.popup-btn {
+  width: 100%;
+  padding: 13px 20px;
+  border: none;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  color: #fff;
+}
+
+.popup-btn:hover { opacity: 0.85; }
+
+.popup-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 12px;
+}
+
+/* SUGGESTED RESPONSE BUTTONS */
+.suggested-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+  max-width: 88%;
+  animation: fadeUp 0.3s ease forwards;
+  opacity: 0;
+}
+
+.suggest-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  text-align: left;
+  line-height: 1.4;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.suggest-btn:hover {
+  border-color: var(--brand);
+  background: var(--blue-bg);
+}
+
+
 /* NAV */
 nav {
   position: sticky;
@@ -1049,7 +1178,136 @@ footer {
 
 @media (max-width: 600px) {
 
-  /* NAV */
+  
+/* PROFILE REVEAL POPUP */
+.profile-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeIn 0.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.profile-popup {
+  background: var(--surface);
+  border-radius: 20px;
+  padding: 36px 32px 28px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+  animation: popUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes popUp {
+  from { opacity: 0; transform: scale(0.88) translateY(16px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.popup-congrats {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.popup-emoji {
+  font-size: 48px;
+  margin-bottom: 12px;
+  display: block;
+  animation: bounce 0.6s ease 0.3s both;
+}
+
+@keyframes bounce {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.popup-profile-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+
+.popup-filter {
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  padding: 0 8px;
+}
+
+.popup-btn {
+  width: 100%;
+  padding: 13px 20px;
+  border: none;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  color: #fff;
+}
+
+.popup-btn:hover { opacity: 0.85; }
+
+.popup-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 12px;
+}
+
+/* SUGGESTED RESPONSE BUTTONS */
+.suggested-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+  max-width: 88%;
+  animation: fadeUp 0.3s ease forwards;
+  opacity: 0;
+}
+
+.suggest-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  text-align: left;
+  line-height: 1.4;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.suggest-btn:hover {
+  border-color: var(--brand);
+  background: var(--blue-bg);
+}
+
+
+/* NAV */
   nav { padding: 0 16px; height: 52px; }
   .nav-links { display: none; }
 
@@ -1794,20 +2052,19 @@ Success metric: Revenue (market validated the vision), review quality (people un
 The mistake: Two traps. Getting distracted by other people's builds and losing their own vision. Building without a financial floor before going too deep.
 
 BEHAVIORAL RULES:
-- Let users describe themselves freely. Do not launch into a quiz.
-- If you have enough to diagnose confidently, do it. Do not ask unnecessary questions.
-- If you need more info, ask ONE targeted question only.
-- After diagnosing, present the profile result clearly.
-- Stay warm, direct, honest. No em dashes. No filler phrases.
-- Acknowledge if someone is a mix and explain their primary driver.
-- Do not rank profiles. Each is legitimate.
-- Keep responses concise.
-- After delivering a profile result, you can also help the user evaluate specific decisions, potential buys, or current operations. When they share details about a property, market, or operational challenge, give them honest feedback filtered through their profile. A Wealth Builder asking about a property should hear whether it serves their long-term equity goals. A Freedom Seeker asking about a market should hear whether it serves consistent monthly net. A Legacy Builder should hear whether the asset protects what they care about. A Creator should hear whether the product potential is there. Always tie feedback back to their primary driver.
-- If someone describes a current operation or management approach that does not align with their profile, name that tension directly and explain why. Be honest, not harsh.
+- Be direct and concise. No fluff, no filler, no long explanations. Get to the point.
+- The opening question asks about their STR situation and goals. After they answer, before diagnosing, ask ONE follow-up: "One more thing before I give you your profile — what does your life outside of STRs look like? Are you a business owner, W-2, retired? Do you have income you are trying to deploy, or are you depending on the STR to produce it? That context is what separates a useful profile from a generic one." Then diagnose after their response.
+- Only ask this life context question once. If they have already shared life context in their first message, skip it and diagnose directly.
+- After that one follow-up, diagnose confidently. Do not ask any more questions.
+- No em dashes. No filler phrases like "Great question" or "That makes sense." Just answer.
+- Acknowledge if someone is a mix and name their primary driver clearly.
+- Do not rank profiles. Each is valid.
+- After the profile is delivered, be a sharp advisor. Filter every follow-up through their profile. Give specific, honest, actionable takes. If something does not fit their profile, name it directly.
+- Keep all responses to 3-5 sentences max unless they ask for detail.
 - When delivering a profile result, output this JSON on its own line:
 PROFILE_RESULT:{"profile":"wealth_builder","name":"The Wealth Builder","filter":"Does this make my balance sheet stronger ten years from now?","summary":"[2-3 sentence personalized summary]","focus":["focus area 1","focus area 2","focus area 3"],"metric":"Net asset value and equity growth"}
 Profile keys: wealth_builder, freedom_seeker, legacy_builder, creator
-Then continue with a warm follow-up after the JSON line. Always include a line telling them to scroll down on this page to find their profile card and tap "See full [profile name] profile" for the complete breakdown including what to look for in a buy, what success looks like, and the mistakes to watch out for. Keep it natural, not robotic.
+After the JSON write ONE short sentence max. The popup and suggested actions handle the rest.
 
 BNB BREEZE PLUGS:
 - BNB Breeze is a short-term rental property management company. Website: bnbbreeze.co
@@ -1851,7 +2108,7 @@ function startChat() {
   document.getElementById('chatHeaderName').textContent = name.split(' ')[0];
 
   const firstName = name.split(' ')[0];
-  addBotMsg(`Good to meet you, ${firstName}. Tell me about your situation. What drew you to short-term rentals, what you are working toward, or where you are right now in your investing.`);
+  addBotMsg(`Good to meet you, ${firstName}. Let's start simple: what does your current STR situation look like, and what are you actually trying to get out of it?`);
 
   document.getElementById('chatInput').addEventListener('input', () => {
     document.getElementById('sendBtn').disabled = !document.getElementById('chatInput').value.trim();
@@ -1942,6 +2199,92 @@ function addUserMsg(text) {
   scroll();
 }
 
+const profileEmojis = {
+  wealth_builder: '📈',
+  freedom_seeker: '🔑',
+  legacy_builder: '🏡',
+  creator: '✨'
+};
+
+const profileColors = {
+  wealth_builder: '#1B4F8A',
+  freedom_seeker: '#2D5A1E',
+  legacy_builder: '#3C2E8A',
+  creator: '#7A4A0A'
+};
+
+const profileBgColors = {
+  wealth_builder: '#EBF3FD',
+  freedom_seeker: '#EAF3DE',
+  legacy_builder: '#EEEDFE',
+  creator: '#FDF0DC'
+};
+
+function showProfilePopup(data) {
+  const color = profileColors[data.profile] || '#1B6FA8';
+  const bg = profileBgColors[data.profile] || '#EBF3FD';
+  const emoji = profileEmojis[data.profile] || '🎯';
+
+  const overlay = document.createElement('div');
+  overlay.className = 'profile-popup-overlay';
+  overlay.id = 'profilePopup';
+  overlay.innerHTML = `
+    <div class="profile-popup">
+      <p class="popup-congrats">Your investor profile</p>
+      <span class="popup-emoji">${emoji}</span>
+      <p class="popup-profile-name" style="color:${color};">You're ${data.name}</p>
+      <p class="popup-filter">"${data.filter}"</p>
+      <button class="popup-btn" style="background:${color};" onclick="closeProfilePopup()">
+        See my full breakdown
+      </button>
+      <p class="popup-sub">Scroll down to find your profile card on this page</p>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeProfilePopup();
+  });
+}
+
+function closeProfilePopup() {
+  const popup = document.getElementById('profilePopup');
+  if (popup) {
+    popup.style.opacity = '0';
+    popup.style.transition = 'opacity 0.2s ease';
+    setTimeout(() => popup.remove(), 200);
+  }
+}
+
+function addSuggestedActions(data) {
+  const suggestions = [
+    { label: 'Build me a buy box for my next property', icon: '🏠' },
+    { label: 'Help me evaluate a market I am looking at', icon: '📍' },
+    { label: 'Give me feedback on my current portfolio', icon: '📊' },
+    { label: 'What are the biggest mistakes for my profile to avoid?', icon: '⚠️' },
+  ];
+
+  const wrap = document.createElement('div');
+  wrap.className = 'suggested-actions';
+
+  suggestions.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'suggest-btn';
+    btn.textContent = s.icon + '  ' + s.label;
+    btn.onclick = function() {
+      wrap.remove();
+      document.getElementById('chatInput').value = s.label;
+      document.getElementById('sendBtn').disabled = false;
+      sendMessage();
+    };
+    wrap.appendChild(btn);
+  });
+
+  const msgWrap = document.createElement('div');
+  msgWrap.className = 'msg bot';
+  msgWrap.appendChild(wrap);
+  getMessages().appendChild(msgWrap);
+  scroll();
+}
+
 function addProfileCard(data, followUp) {
   const meta = profileMeta[data.profile] || profileMeta.wealth_builder;
   const chips = (data.focus || []).map(f => `<span class="chip ${meta.chipCls}">${f}</span>`).join('');
@@ -1967,8 +2310,19 @@ function addProfileCard(data, followUp) {
   getMessages().appendChild(el);
   profileResult = data;
   sendLeadEmail('profile delivered');
-  if (followUp) setTimeout(() => addBotMsg(followUp), 350);
-  setTimeout(() => addEndConvoButton(), followUp ? 1800 : 800);
+
+  // Show celebration popup after short delay
+  setTimeout(() => showProfilePopup(data), 400);
+
+  // Show follow-up message then suggested actions
+  if (followUp) {
+    setTimeout(() => addBotMsg(followUp), 800);
+    setTimeout(() => addSuggestedActions(data), 1400);
+  } else {
+    setTimeout(() => addSuggestedActions(data), 800);
+  }
+
+  setTimeout(() => addEndConvoButton(), 2400);
   scroll();
 }
 
