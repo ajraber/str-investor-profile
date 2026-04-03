@@ -297,6 +297,24 @@ nav {
   font-weight: 300;
 }
 
+/* AI FEATURE PILLS */
+.ai-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.ai-pill {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: var(--blue-bg);
+  color: var(--brand);
+  border: 1px solid var(--blue-mid);
+}
+
 /* LEAD GATE */
 .bot-section { padding: 64px 0; }
 
@@ -897,9 +915,134 @@ footer {
 .chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
 @media (max-width: 600px) {
-  .profiles-grid { grid-template-columns: 1fr; }
+
+  /* NAV */
+  nav { padding: 0 16px; height: 52px; }
   .nav-links { display: none; }
-  .lead-gate { padding: 28px 20px; }
+
+  /* HERO — mobile first, punchy and immediate */
+  .hero {
+    padding: 40px 20px 48px;
+    text-align: center;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    gap: 6px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero h1 {
+    font-size: 38px;
+    line-height: 1.05;
+    margin-bottom: 16px;
+    letter-spacing: -0.03em;
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    margin-bottom: 28px;
+    line-height: 1.65;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .btn-primary {
+    width: 100%;
+    justify-content: center;
+    padding: 15px 24px;
+    font-size: 15px;
+    border-radius: 12px;
+  }
+
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 13px 24px;
+    font-size: 14px;
+  }
+
+  .hero-profiles {
+    margin-top: 36px;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .profile-badge {
+    font-size: 11px;
+    padding: 5px 11px;
+  }
+
+  /* AI PILLS */
+  .ai-features {
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .ai-pill {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+
+  /* BOT SECTION */
+  .bot-section { padding: 44px 0; }
+
+  .section { padding: 0 16px; }
+
+  .section-title { font-size: 22px; }
+
+  .section-sub { font-size: 14px; }
+
+  /* LEAD GATE */
+  .lead-gate {
+    padding: 24px 18px;
+    border-radius: 14px;
+  }
+
+  .lead-gate h3 { font-size: 19px; }
+
+  .lead-gate p { font-size: 13px; margin-bottom: 20px; }
+
+  .form-input { font-size: 16px; } /* prevents iOS zoom on focus */
+
+  .form-submit {
+    padding: 14px;
+    font-size: 15px;
+    border-radius: 10px;
+  }
+
+  /* CHAT */
+  .chat-container { height: 480px; border-radius: 14px; }
+
+  .bubble { max-width: 90%; font-size: 14px; }
+
+  .chat-profile-card { max-width: 96%; }
+
+  .starter-btn { font-size: 11px; padding: 5px 10px; }
+
+  /* PROFILES GRID */
+  .profiles-grid { grid-template-columns: 1fr; gap: 14px; }
+
+  .profile-card-header { padding: 16px 18px 12px; }
+
+  .profile-card-name { font-size: 19px; }
+
+  .profile-card-body { padding: 14px 18px 16px; gap: 12px; }
+
+  /* CONTACT SECTION */
+  .contact-inner { grid-template-columns: 1fr; gap: 28px; }
+
+  .contact-form-card { padding: 22px 18px; border-radius: 14px; }
+
+  /* FOOTER */
+  footer { padding: 20px 16px; flex-direction: column; align-items: flex-start; gap: 8px; }
 }
 </style>
 </head>
@@ -922,15 +1065,17 @@ footer {
   <div class="hero">
     <div class="hero-eyebrow">
       <span class="eyebrow-dot"></span>
+      AI-Powered Profile Advisor
+      <span class="eyebrow-dot"></span>
       STR Summit 2026
       <span class="eyebrow-dot"></span>
       BNB Breeze
     </div>
     <h1>Which investor<br><em>are you?</em></h1>
-    <p class="hero-sub">Most STR frustration comes from measuring yourself by the wrong scoreboard. Find your investor profile and stay true to the metrics that actually define success for you.</p>
+    <p class="hero-sub">Chat with a live AI trained on STR investing. Get your investor profile, real feedback on your current operations, and clarity on the decisions that actually matter for your goals.</p>
     <div class="hero-actions">
       <a href="#bot" class="btn-primary">
-        Find my profile
+        Get AI powered profile
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7H11M11 7L7 3M11 7L7 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <a href="#profiles" class="btn-secondary">Explore the profiles</a>
@@ -949,14 +1094,20 @@ footer {
 <!-- BOT SECTION -->
 <section id="bot" class="bot-section">
   <div class="section">
-    <p class="section-label">Profile finder</p>
-    <h2 class="section-title">Tell me about your situation</h2>
-    <p class="section-sub">Describe what you are working toward in STR investing. The advisor will identify your profile, help you evaluate decisions, and give you feedback on how your current operations fit your investor goals.</p>
+    <p class="section-label">Live AI Advisor</p>
+    <h2 class="section-title">Get real STR feedback from AI</h2>
+    <p class="section-sub">This is not a quiz. You are talking with a live AI trained on STR investing. Describe your situation and it will identify your investor profile, give honest feedback on your current operations, help you evaluate decisions, and tell you exactly what to focus on.</p>
 
     <!-- LEAD GATE -->
+    <div class="ai-features">
+        <span class="ai-pill">Investor profile diagnosis</span>
+        <span class="ai-pill">Operations feedback</span>
+        <span class="ai-pill">Decision evaluation</span>
+        <span class="ai-pill">What to focus on</span>
+      </div>
     <div class="lead-gate" id="leadGate">
-      <h3>Before we get started</h3>
-      <p>Enter your details below and we will send you your investor profile result.</p>
+      <h3>Start your AI analysis</h3>
+      <p>Enter your details and start chatting with a live AI STR advisor. It will analyze your situation, identify your investor profile, and give you honest feedback you can actually use.</p>
       <div class="form-field">
         <label class="form-label" for="leadName">Your name</label>
         <input class="form-input" type="text" id="leadName" placeholder="First and last name" autocomplete="name" />
@@ -967,7 +1118,7 @@ footer {
       </div>
 
       <button class="form-submit" onclick="startChat()">
-        Find my investor profile
+        Start my AI analysis
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7H11M11 7L7 3M11 7L7 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <p class="form-privacy">No spam. Your information is only used to send you your profile result. BNB Breeze may follow up if we think we can help.</p>
@@ -1150,7 +1301,7 @@ footer {
         <p class="section-label">Work with us</p>
         <h2 class="section-title" style="color:var(--ink);">Ready to bring your goals to life?</h2>
         <p class="contact-body">Knowing your investor profile is the first step. Actually moving toward it is the next one. If you want someone to help you think through your strategy, evaluate a property, give honest feedback on your current operations, or just guide your STR journey — that is exactly what BNB Breeze does.</p>
-        <a href="https://bnbbreeze.co/services" target="_blank" class="services-link">
+        <a href="https://bnbbreeze.co/offer" target="_blank" class="services-link">
           See what we offer
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2.5 10.5L10.5 2.5M10.5 2.5H5M10.5 2.5V8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
