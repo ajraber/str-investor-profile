@@ -893,20 +893,28 @@ nav {
   justify-content: center;
   gap: 8px;
   margin: 16px 22px;
-  padding: 10px 18px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  padding: 11px 18px;
+  background: var(--surface);
+  border: 1.5px solid var(--brand);
+  border-radius: 9px;
   cursor: pointer;
   font-family: 'DM Sans', sans-serif;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--brand);
   text-align: center;
-  transition: background 0.15s, border-color 0.15s;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  letter-spacing: 0.01em;
 }
 
-.accordion-trigger:hover { background: var(--blue-bg); border-color: var(--blue-mid); }
+.accordion-trigger:hover {
+  background: var(--brand);
+  color: #fff;
+}
+
+.accordion-trigger:hover .accordion-icon path {
+  stroke: #fff;
+}
 
 .accordion-icon {
   width: 18px;
@@ -1011,6 +1019,12 @@ nav {
   border: 1px solid var(--border);
   border-radius: 16px;
   overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+  transition: box-shadow 0.2s ease;
+}
+
+.profile-card:hover {
+  box-shadow: 0 6px 24px rgba(0,0,0,0.1), 0 2px 6px rgba(0,0,0,0.05);
 }
 
 .profile-card-header {
@@ -1020,10 +1034,10 @@ nav {
 
 .profile-card-name {
   font-family: 'DM Serif Display', serif;
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 400;
-  letter-spacing: -0.01em;
-  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
 }
 
 .profile-card-filter {
@@ -1033,13 +1047,17 @@ nav {
   line-height: 1.5;
 }
 
-.pc-wb { border-top: 3px solid var(--blue); }
+.pc-wb { border-top: 4px solid var(--blue); }
+.pc-wb .profile-card-header { background: linear-gradient(135deg, #EBF3FD 0%, #F7F5F0 100%); }
 .pc-wb .profile-card-name { color: var(--blue); }
-.pc-fs { border-top: 3px solid var(--green); }
+.pc-fs { border-top: 4px solid var(--green); }
+.pc-fs .profile-card-header { background: linear-gradient(135deg, #EAF3DE 0%, #F7F5F0 100%); }
 .pc-fs .profile-card-name { color: var(--green); }
-.pc-lb { border-top: 3px solid var(--purple); }
+.pc-lb { border-top: 4px solid var(--purple); }
+.pc-lb .profile-card-header { background: linear-gradient(135deg, #EEEDFE 0%, #F7F5F0 100%); }
 .pc-lb .profile-card-name { color: var(--purple); }
-.pc-cr { border-top: 3px solid var(--amber); }
+.pc-cr { border-top: 4px solid var(--amber); }
+.pc-cr .profile-card-header { background: linear-gradient(135deg, #FDF0DC 0%, #F7F5F0 100%); }
 .pc-cr .profile-card-name { color: var(--amber); }
 
 .profile-card-body {
@@ -1051,12 +1069,17 @@ nav {
 
 .pc-section-label {
   font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.07em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
   margin-bottom: 5px;
 }
+
+.pc-wb .pc-section-label { color: var(--blue); opacity: 0.8; }
+.pc-fs .pc-section-label { color: var(--green); opacity: 0.8; }
+.pc-lb .pc-section-label { color: var(--purple); opacity: 0.8; }
+.pc-cr .pc-section-label { color: var(--amber); opacity: 0.8; }
 
 .pc-text { font-size: 13px; color: #3A3630; line-height: 1.65; }
 
@@ -1065,14 +1088,14 @@ nav {
 .pc-q { display: flex; gap: 8px; align-items: flex-start; }
 
 .pc-q-num {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 10px;
-  font-weight: 500;
+  font-weight: 700;
   flex-shrink: 0;
   margin-top: 1px;
 }
@@ -1088,8 +1111,9 @@ nav {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 12px;
-  border-radius: 10px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.06);
 }
 
 .pm-wb { background: var(--blue-bg); }
@@ -1099,13 +1123,20 @@ nav {
 
 .pc-metric-label {
   font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
+  font-weight: 700;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
+  opacity: 0.7;
 }
 
-.pc-metric-value { font-size: 13px; font-weight: 500; line-height: 1.3; }
+.pc-metric-value {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+  font-family: 'DM Serif Display', serif;
+  letter-spacing: -0.01em;
+}
 
 .ml-wb { color: var(--blue); }
 .ml-fs { color: var(--green); }
